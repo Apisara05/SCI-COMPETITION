@@ -19,7 +19,7 @@ const User = sequelize.define("user",  {
     type: DataTypes.STRING,
     allowNull: false,
   },
-});
+  });
 
 User.sync({ force: false })
   .then(() => {

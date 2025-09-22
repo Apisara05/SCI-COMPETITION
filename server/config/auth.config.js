@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
 
 export default {
-  secret: process.env.JWT_SECRET,
+  secret: process.env.JWT_KEY,
 };
