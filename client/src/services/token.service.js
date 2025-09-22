@@ -11,7 +11,7 @@ const setUser = (user) => {
 const getLocalAccessToken = () => {
   const user = getUser();
   // ? if user undefined ไม่มีจะไม่ทำ
-  return user?.token;
+  return user?.accesstoken;
 };
 
 const removeUser = () => {

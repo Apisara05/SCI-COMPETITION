@@ -9,6 +9,8 @@ const register = async (name, email, type, school, phone, password, ) => {
     name,
     email,
     type,
+    school,
+    phone,
     password,
   });
 };

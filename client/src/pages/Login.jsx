@@ -1,14 +1,49 @@
+import { use, useEffect } from "react";
 import { useState } from "react";
-
+import React from "react";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import AuthService from "../services/AuthService.jsx";
+import { useAuthContext } from "../context/AuthContext.jsx";
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [logInData, setLogInData] = useState({
+    email: "",
+    password: "",
+  });
+  const  {login, user}  = useAuthContext();
+  const navigate = () => {
+      const { name, value } = e.target;
+      setLogInData({...logInData, [name]: value});
+      };
+      useEffect(() => {
+        if (user) {
+          navigate("/");
+        }
+      }, [user, navigate]);
+      const { email, password } = logInData;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: call API for login
-    alert(`Login: ${username}`);
-  };
+    const handleSubmit =async (e) => {
+      e.preventDefault();
+      try {
+        const curerentUser = await AuthService.login(
+          logInData.email, 
+          logInData.password
+        );
+        if (curerentUser.status === 200) {
+          Swal.fire({
+            title: "User Login",
+            text: curerentUser?.data?.message,
+            icon: "success",
+          }).then(() => {
+            login(curerentUser?.data?.user);
+            navigate("/");
+
+          });
+        }
+        } catch (error) {
+        console.error("Error during login:", error);
+      }
+    }; 
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
